@@ -16,19 +16,41 @@ const app = express();
 app.use(express.json());
 dotenv.config();
 connectDB();
+
 app.use(
   cors({
-    origin: 'http://localhost:3000', // your frontend origin
-    credentials: true, // needed if you're using cookies/session
+    origin: process.env.CLEINET_URI || 'http://localhost:3000',
+    credentials: true,
   }),
 );
+
+// in local development,
 app.use(
   session({
-    secret: 'your_secret_key',
+    secret: process.env.SESSION_SECRET || 'default_secret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: 'lax',
+      secure: false,
+    },
   }),
 );
+
+// in production
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET || 'default_secret',
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       sameSite: 'none',
+//       secure: true,
+//       httpOnly: true,
+//       maxAge: 1000 * 60 * 60 * 24 * 7,
+//     },
+//   }),
+// );
 
 app.use(passport.initialize());
 app.use(passport.session());
