@@ -10,12 +10,12 @@ export const getLoggedInUser = (req: Request, res: Response) => {
 
 // Redirect after successful login
 export const googleCallback = (req: Request, res: Response) => {
-  res.redirect('/');
+  res.redirect(`${process.env.CLEINET_URI || 'http://localhost:5173'}`);
 };
 
 // Logout controller
 export const logout = (req: Request, res: Response) => {
   req.logout(() => {
-    res.redirect('/');
+    res.redirect(`${process.env.CLEINET_URI || 'http://localhost:5173'}`);
   });
 };
