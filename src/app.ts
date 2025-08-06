@@ -9,13 +9,19 @@ import passport from 'passport';
 import './config/passport.config';
 import authRoutes from './routes/auth.routes';
 import { isAuthenticated } from './middlewares/isAuthenticated';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
 dotenv.config();
 connectDB();
-
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // your frontend origin
+    credentials: true, // needed if you're using cookies/session
+  }),
+);
 app.use(
   session({
     secret: 'your_secret_key',
