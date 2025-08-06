@@ -25,32 +25,32 @@ app.use(
 );
 
 // in local development,
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'default_secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      sameSite: 'lax',
-      secure: false,
-    },
-  }),
-);
-
-// in production
 // app.use(
 //   session({
 //     secret: process.env.SESSION_SECRET || 'default_secret',
 //     resave: false,
 //     saveUninitialized: false,
 //     cookie: {
-//       sameSite: 'none',
-//       secure: true,
-//       httpOnly: true,
-//       maxAge: 1000 * 60 * 60 * 24 * 7,
+//       sameSite: 'lax',
+//       secure: false,
 //     },
 //   }),
 // );
+
+// in production
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'default_secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+  }),
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
