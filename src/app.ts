@@ -17,9 +17,10 @@ app.use(express.json());
 dotenv.config();
 connectDB();
 
+app.set('trust proxy', 1);
 app.use(
   cors({
-    origin: process.env.CLEINET_URI || 'http://localhost:5173',
+    origin: 'https://todozit.netlify.app',
     credentials: true,
   }),
 );
